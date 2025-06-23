@@ -1,0 +1,60 @@
+services:
+  # PostgreSQL Datenbank
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Backend Service
+  backend:
+    build: 
+      context: ./bimanu-backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=password
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - NODE_ENV=development
+    volumes:
+      - ./bimanu-backend:/app
+      - /app/node_modules
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./bimanu-frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_BASE_URL=http://localhost:3000
+    volumes:
+      - ./bimanu-frontend:/app
+      - /app/node_modules
+
+  # Adminer (Database UI)
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
