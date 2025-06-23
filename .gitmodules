@@ -1,0 +1,6 @@
+[submodule "bimanu-backend"]
+	path = bimanu-backend
+	url = git@github.com:Philipp-Rudolph/bimanu-backend.git
+[submodule "bimanu-frontend"]
+	path = bimanu-frontend
+	url = git@github.com:Philipp-Rudolph/bimanu-frontend.git
