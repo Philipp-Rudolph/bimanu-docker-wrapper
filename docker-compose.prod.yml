@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secure_tankstellen_2025
+      POSTGRES_DB: tankstellen
+    volumes:
+      - tankstellen_pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  backend:
+    build: 
+      context: ./bimanu-backend
+      dockerfile: Dockerfile.prod
+    restart: always
+    ports:
+      - "3002:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=secure_tankstellen_2025
+      - DB_NAME=tankstellen
+      - NODE_ENV=production
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: ./bimanu-frontend
+      dockerfile: Dockerfile.prod
+    restart: always
+    ports:
+      - "8082:80"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8083:8080"
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+volumes:
+  tankstellen_pgdata:
+
+networks:
+  app_network:
+    driver: bridge
