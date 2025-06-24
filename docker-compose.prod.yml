@@ -3,10 +3,10 @@ services:
     image: postgres:17
     restart: always
     environment:
-      POSTGRES_PASSWORD: secure_tankstellen_2025
-      POSTGRES_DB: tankstellen
+      POSTGRES_PASSWORD: secure_gas_stations_2025
+      POSTGRES_DB: gas_stations
     volumes:
-      - tankstellen_pgdata:/var/lib/postgresql/data
+      - gas_stations_pgdata:/var/lib/postgresql/data
     networks:
       - app_network
 
@@ -21,8 +21,8 @@ services:
       - db
     environment:
       - DB_HOST=db
-      - DB_PASSWORD=secure_tankstellen_2025
-      - DB_NAME=tankstellen
+      - DB_PASSWORD=secure_gas_stations_2025
+      - DB_NAME=gas_stations
       - NODE_ENV=production
     networks:
       - app_network
@@ -50,7 +50,7 @@ services:
       - app_network
 
 volumes:
-  tankstellen_pgdata:
+  gas_stations_pgdata:
 
 networks:
   app_network:
