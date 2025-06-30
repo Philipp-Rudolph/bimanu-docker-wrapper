@@ -1,12 +1,14 @@
 services:
   db:
-    image: postgres:17
+    image: postgis/postgis:17-3.5  # PostGIS mit PostgreSQL 17
     restart: always
     environment:
       POSTGRES_PASSWORD: secure_gas_stations_2025
       POSTGRES_DB: gas_stations
+      POSTGRES_USER: postgres
     volumes:
       - gas_stations_pgdata:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d 
     networks:
       - app_network
 

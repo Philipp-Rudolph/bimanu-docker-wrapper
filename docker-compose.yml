@@ -1,60 +1,59 @@
 services:
-  # PostgreSQL Datenbank
   db:
-    image: postgres:17
+    image: postgis/postgis:16-3.4  # PostGIS mit PostgreSQL 16 (ARM64 compatible)
     restart: always
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: postgres
+      POSTGRES_DB: gas_stations
+      POSTGRES_USER: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - gas_stations_pgdata:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d 
+    networks:
+      - app_network
 
-  # Backend Service
   backend:
     build: 
       context: ./bimanu-backend
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
+      - "3002:3000"
     depends_on:
       - db
     environment:
       - DB_HOST=db
       - DB_PASSWORD=password
-      - DB_NAME=postgres
-      - DB_USER=postgres
+      - DB_NAME=gas_stations
       - NODE_ENV=development
-    volumes:
-      - ./bimanu-backend:/app
-      - /app/node_modules
+    networks:
+      - app_network
 
-  # Frontend Service
   frontend:
     build:
       context: ./bimanu-frontend
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "5173:5173"
+      - "8082:8082"
     depends_on:
       - backend
-    environment:
-      - VITE_API_BASE_URL=http://localhost:3000
-    volumes:
-      - ./bimanu-frontend:/app
-      - /app/node_modules
+    networks:
+      - app_network
 
-  # Adminer (Database UI)
   adminer:
     image: adminer
     restart: always
     ports:
-      - "8080:8080"
+      - "8083:8080"
     depends_on:
       - db
+    networks:
+      - app_network
 
 volumes:
-  pgdata:
+  gas_stations_pgdata:
+
+networks:
+  app_network:
+    driver: bridge
