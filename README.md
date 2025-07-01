@@ -19,15 +19,17 @@ Gas station finder application with Vue.js frontend, Node.js backend, and PostGI
    cd bimanu-docker-wrapper
    ```
 
-2a. **Deploy to production:**
-    ```bash
-    docker compose -f docker-compose.prod.yml up -d --build
-    ```
+2. **Deploy based on your needs:**
 
-2b. **For development deployment:**
-    ```bash
-    docker compose up -d --build
-    ```
+   a. **For production deployment:**
+      ```bash
+      docker compose -f docker-compose.prod.yml up -d --build
+      ```
+
+   b. **For development deployment:**
+      ```bash
+      docker compose up -d --build
+      ```
 
 3. **Verify deployment:**
    ```bash
