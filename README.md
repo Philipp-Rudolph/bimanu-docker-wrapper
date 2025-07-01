@@ -19,10 +19,15 @@ Gas station finder application with Vue.js frontend, Node.js backend, and PostGI
    cd bimanu-docker-wrapper
    ```
 
-2. **Deploy to production:**
-   ```bash
-   docker compose -f docker-compose.prod.yml up -d --build
-   ```
+2a. **Deploy to production:**
+    ```bash
+    docker compose -f docker-compose.prod.yml up -d --build
+    ```
+
+2b. **For development deployment:**
+    ```bash
+    docker compose up -d --build
+    ```
 
 3. **Verify deployment:**
    ```bash
@@ -62,50 +67,3 @@ docker compose logs -f
 - Check service status: `docker compose ps`
 - View logs: `docker compose logs [service-name]`
 - Restart services: `docker compose restart`
-
-## Optional-Anforderungen (Kür):
-
-**Entwicklungstools & Qualität:**
-
-- [x]  Methoden/Tools für kollaborative Entwicklung evaluieren
-    - **GitHub/GitLab** für Code-Repository mit Issues, Pull/Merge Requests
-    - **Branch-Strategie**: GitFlow oder GitHub Flow
-        - `main` - Production-ready Code
-        - `integration` - Integration Branch
-        - `i-feat/xyz` - Feature-Entwicklung
-        - `i-fix/xyz` - Schnelle Bugfixes
-        - `i-chore/xyz` - Schnelle Bugfixes
-    - **Jira** für Sprint Planung / Erweiterungen
-    - **Slack** für Kommunikation
-    - **Notion** für gemeinsame Dokumentation
-    - **Docker Compose** optimieren für lokale Entwicklung (Einheitliche Entwicklungsumgebung)
-
-- [x]  Maßnahmen zur Sicherstellung der Codequalität definieren
-    - Einrichtung von esLint für Code Qualität (Linting)
-    - Einrichtung einer CI/CD Pipeline mit obligatorischem Linting (und ggf. Testing)
-    - DependaBot für Sicherheitswarnungen von Dependencies
-
-**Erweiterungen:**
-
-- [x]  Konzept für CRUD-App Erweiterung entwickeln
-    - Einrichtung weiterer Endpunkte im Backend
-        
-        ```jsx
-        app.post('/api/gas-stations', createGasStation);       // CREATE
-        app.get('/api/gas-stations/:id', getGasStation);       // READ
-        app.put('/api/gas-stations/:id', updateGasStation);    // UPDATE
-        app.delete('/api/gas-stations/:id', deleteGasStation); // DELETE
-        ```
-        
-    - Frontend Erweiterung
-        - Login-Seite für Authentifizierung
-        - Formular für neue Einträge
-        - Input Validierung neuer Einträge
-
-- [x]  Hosting-Strategie und -Maßnahmen planen
-    - Containerisierung (Docker Swarm / Kubernetes)
-    - Nginx Reverse Proxy + CertBot für TSL / SSL
-    - Monitoring (UptimeRobot / Prometheus / Grafana / Kuma)
-    - ggf. Caching für Performance
-    - ggf. Fail2Ban und Rate Limiting gegen Bot Attacken
-    - ggf. Logging und Backups an neutralen Orten
