@@ -17,6 +17,7 @@ Gas station finder application with Vue.js frontend, Node.js backend, and PostGI
    ```bash
    git clone git@github.com:Philipp-Rudolph/bimanu-docker-wrapper.git
    cd bimanu-docker-wrapper
+   git submodule update --recursive --remote --init 
    ```
 
 2. **Deploy based on your needs:**
