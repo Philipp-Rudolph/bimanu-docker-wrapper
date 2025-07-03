@@ -37,6 +37,11 @@ Gas station finder application with Vue.js frontend, Node.js backend, and PostGI
    docker compose ps
    ```
 
+4. **Initial Database import (if needed)**
+   ```bash
+   curl -X POST http://localhost:3002/import 
+   ```
+
 ### Services & Ports
 
 - **Frontend:** http://localhost:8082 (Vue.js application)
